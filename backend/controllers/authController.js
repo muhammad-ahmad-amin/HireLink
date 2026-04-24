@@ -22,7 +22,10 @@ const signup = async (req, res) => {
         bio: '',
         skills: [],
         hourlyRate: 0,
-        portfolio: []
+        portfolio: [],
+        reviews: [],
+        averageRating: 0,
+        reviewCount: 0
       }
     });
 

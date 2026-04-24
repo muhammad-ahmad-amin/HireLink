@@ -47,7 +47,45 @@ const updateUserProfile = async (req, res) => {
   }
 };
 
+const addUserReview = async (req, res) => {
+  try {
+    const email = req.params.email.toLowerCase().trim();
+    const { reviewerName, rating, comment, jobId } = req.body;
+
+    if (!reviewerName || !rating || !jobId) {
+      return res.status(400).json({ error: 'Reviewer name, rating, and job ID are required' });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const existingReview = user.profile.reviews.find(
+      (review) => review.jobId === jobId && review.reviewerName === reviewerName
+    );
+    if (existingReview) {
+      return res.status(400).json({ error: 'Review for this job has already been submitted' });
+    }
+
+    user.profile.reviews.unshift({ jobId, reviewerName, rating, comment });
+    user.profile.reviewCount = user.profile.reviews.length;
+    user.profile.averageRating =
+      user.profile.reviews.reduce((sum, review) => sum + review.rating, 0) / user.profile.reviewCount;
+
+    await user.save();
+
+    res.status(201).json({
+      message: 'Review submitted successfully',
+      profile: user.profile
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getUserProfile,
-  updateUserProfile
+  updateUserProfile,
+  addUserReview
 };

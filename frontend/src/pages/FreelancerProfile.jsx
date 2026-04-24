@@ -89,160 +89,213 @@ export default function FreelancerProfile() {
 
   if (loading) return <div className="min-h-screen bg-gray-50 flex justify-center items-center">Loading...</div>;
 
-  const dummy_reviews = [
-    { id: 1, name: "Alice", rating: 5, comment: "Great work, highly recommended!" },
-    { id: 2, name: "Bob", rating: 4, comment: "Delivered on time and professional." },
-  ];
+  const reviews = profile.reviews || [];
+  const averageRating = profile.averageRating ? profile.averageRating.toFixed(1) : null;
+  const reviewCount = profile.reviewCount || 0;
 
   return (
-    <div className="min-h-screen bg-gray-50 flex justify-center p-6">
-      <div className="w-full max-w-5xl">
-        {error && (
-          <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg">
-            {error}
-          </div>
-        )}
+    <div className="min-h-screen bg-gray-50">
+      {/* Top Navigation */}
+      <TopNav user={user} />
 
-        {/* Profile Header */}
-        <div className="bg-white p-6 rounded-2xl shadow-md flex flex-col md:flex-row items-center md:items-start">
-          <img
-            src={`https://ui-avatars.com/api/?name=${user?.fullName || "User"}&background=3B82F6&color=FFFFFF&rounded=true&size=128`}
-            alt="Freelancer Avatar"
-            className="w-28 h-28 rounded-full border-4 border-blue-300 mb-4 md:mb-0"
-          />
-          <div className="md:ml-6 flex-1">
-            <h1 className="text-2xl font-bold text-blue-600">{user?.fullName}</h1>
-            <p className="text-blue-500 text-sm mb-2">{profile.bio || "No bio added yet"}</p>
-            <div className="flex items-center mb-2 space-x-2">
-              <span className="text-purple-600 font-semibold">⭐ {profile.hourlyRate ? profile.hourlyRate : "N/A"}</span>
-              <span className="text-blue-400 text-sm">Hourly Rate</span>
-            </div>
-            <p className="text-blue-500 text-sm">User Type: {user?.userType}</p>
-            <button
-              onClick={() => setEditing(!editing)}
-              className="mt-3 inline-block bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-semibold"
-            >
-              {editing ? "Cancel" : "Edit Profile"}
-            </button>
-          </div>
-        </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="flex">
+          {/* Sidebar */}
+          <Sidebar user={user} />
 
-        {/* Edit Profile Form */}
-        {editing && (
-          <form onSubmit={handleUpdateProfile} className="bg-white mt-6 p-6 rounded-2xl shadow-md">
-            <h2 className="text-xl font-bold text-blue-600 mb-4">Edit Profile</h2>
-            
-            <div className="mb-4">
-              <label className="block text-blue-600 font-semibold mb-2">Bio</label>
-              <textarea
-                value={profile.bio}
-                onChange={(e) => setProfile({ ...profile, bio: e.target.value })}
-                className="w-full p-3 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                rows="4"
-              />
-            </div>
-
-            <div className="mb-4">
-              <label className="block text-blue-600 font-semibold mb-2">Hourly Rate ($)</label>
-              <input
-                type="number"
-                value={profile.hourlyRate}
-                onChange={(e) => setProfile({ ...profile, hourlyRate: parseFloat(e.target.value) })}
-                className="w-full p-3 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-
-            <div className="mb-4">
-              <label className="block text-blue-600 font-semibold mb-2">Skills</label>
-              <div className="flex gap-2 mb-2">
-                <input
-                  type="text"
-                  value={newSkill}
-                  onChange={(e) => setNewSkill(e.target.value)}
-                  placeholder="Add a skill"
-                  className="flex-1 p-3 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <button
-                  type="button"
-                  onClick={handleAddSkill}
-                  className="bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 transition-colors"
-                >
-                  Add
-                </button>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {profile.skills.map((skill, index) => (
-                  <span
-                    key={index}
-                    className="bg-blue-100 text-blue-700 px-3 py-1 rounded-lg flex items-center gap-2"
-                  >
-                    {skill}
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveSkill(skill)}
-                      className="text-red-500 hover:text-red-700 font-bold"
-                    >
-                      ×
-                    </button>
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
-            >
-              Save Changes
-            </button>
-          </form>
-        )}
-
-        {/* Overview / Bio */}
-        {!editing && (
-          <section className="bg-white mt-6 p-6 rounded-2xl shadow-md">
-            <h2 className="text-xl font-bold text-blue-600 mb-2">Overview</h2>
-            <p className="text-blue-500 text-sm">
-              {profile.bio || "No bio added yet. Edit your profile to add a bio."}
-            </p>
-
-            {/* Skills Section */}
-            {profile.skills && profile.skills.length > 0 && (
-              <div className="mt-4">
-                <h3 className="text-lg font-bold text-blue-600 mb-2">Skills</h3>
-                <div className="flex flex-wrap gap-2">
-                  {profile.skills.map((skill, index) => (
-                    <span key={index} className="bg-blue-100 text-blue-700 px-3 py-1 rounded-lg text-sm">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
+          {/* Main Content */}
+          <div className="flex-1 ml-8">
+            {error && (
+              <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-xl">
+                {error}
               </div>
             )}
-          </section>
-        )}
 
-        {/* Reviews Section */}
-        <section className="bg-white mt-6 p-6 rounded-2xl shadow-md">
-          <h2 className="text-xl font-bold text-blue-600 mb-4">Reviews</h2>
-          {dummy_reviews.map((review) => (
-            <div key={review.id} className="border-b border-blue-200 pb-3 mb-3 last:border-b-0">
-              <div className="flex justify-between items-start mb-1">
-                <h4 className="text-blue-600 font-semibold">{review.name}</h4>
-                <span className="text-yellow-500">{'⭐'.repeat(review.rating)}</span>
+            {/* Profile Header */}
+            <div className="bg-gradient-to-br from-blue-600 via-purple-600 to-pink-500 rounded-2xl p-8 text-white mb-8 shadow-lg">
+              <div className="flex flex-col md:flex-row items-start md:items-center gap-8">
+                <img
+                  src={`https://ui-avatars.com/api/?name=${user?.fullName || "User"}&background=3B82F6&color=FFFFFF&rounded=true&size=120`}
+                  alt="Freelancer Avatar"
+                  className="w-32 h-32 rounded-full border-4 border-white shadow-lg"
+                />
+                <div className="flex-1">
+                  <h1 className="text-4xl font-bold mb-2">{user?.fullName}</h1>
+                  <p className="text-blue-100 text-lg mb-6 leading-relaxed">{profile.bio || "No bio added yet"}</p>
+                  
+                  <div className="flex flex-wrap gap-8 mb-6">
+                    <div>
+                      <p className="text-blue-100 text-sm font-medium mb-1">Hourly Rate</p>
+                      <p className="text-3xl font-bold">${profile.hourlyRate || "N/A"}</p>
+                    </div>
+                    {averageRating && (
+                      <div>
+                        <p className="text-blue-100 text-sm font-medium mb-1">Rating</p>
+                        <div className="flex items-center gap-2">
+                          <span className="text-2xl font-bold">⭐ {averageRating}</span>
+                          <span className="text-blue-100">({reviewCount} review{reviewCount === 1 ? '' : 's'})</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <button
+                    onClick={() => setEditing(!editing)}
+                    className={`px-6 py-2.5 rounded-lg font-semibold transition-all ${
+                      editing
+                        ? 'bg-white bg-opacity-20 text-white hover:bg-opacity-30'
+                        : 'bg-white text-blue-600 hover:bg-blue-50'
+                    }`}
+                  >
+                    {editing ? "Cancel Editing" : "Edit Profile"}
+                  </button>
+                </div>
               </div>
-              <p className="text-blue-500 text-sm">{review.comment}</p>
             </div>
-          ))}
-        </section>
 
-        <div className="mt-6 text-center">
-          <Link
-            to="/dashboard"
-            className="inline-block bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-semibold"
-          >
-            Back to Dashboard
-          </Link>
+            {/* Edit Profile Form */}
+            {editing && (
+              <form onSubmit={handleUpdateProfile} className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200 mb-8">
+                <h2 className="text-2xl font-bold text-gray-900 mb-8">Edit Profile</h2>
+                
+                <div className="space-y-6">
+                  <div>
+                    <label className="block text-gray-700 font-semibold mb-3">Bio</label>
+                    <textarea
+                      value={profile.bio}
+                      onChange={(e) => setProfile({ ...profile, bio: e.target.value })}
+                      className="w-full p-4 border border-gray-300 text-gray-900 placeholder-gray-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                      rows="4"
+                      placeholder="Tell us about yourself..."
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-gray-700 font-semibold mb-3">Hourly Rate ($)</label>
+                    <input
+                      type="number"
+                      value={profile.hourlyRate}
+                      onChange={(e) => setProfile({ ...profile, hourlyRate: parseFloat(e.target.value) })}
+                      className="w-full p-4 border border-gray-300 text-gray-900 placeholder-gray-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                      placeholder="0.00"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-gray-700 font-semibold mb-3">Skills</label>
+                    <div className="flex gap-2 mb-4">
+                      <input
+                        type="text"
+                        value={newSkill}
+                        onChange={(e) => setNewSkill(e.target.value)}
+                        placeholder="Add a skill"
+                        className="flex-1 p-4 border border-gray-300 text-gray-900 placeholder-gray-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                      />
+                      <button
+                        type="button"
+                        onClick={handleAddSkill}
+                        className="bg-blue-600 text-white px-6 py-4 rounded-xl hover:bg-blue-700 transition-colors font-semibold"
+                      >
+                        Add
+                      </button>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {profile.skills.map((skill, index) => (
+                        <span
+                          key={index}
+                          className="bg-blue-100 text-blue-700 px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-blue-200 transition-colors"
+                        >
+                          {skill}
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveSkill(skill)}
+                            className="text-blue-700 hover:text-red-600 font-bold ml-1"
+                          >
+                            ×
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-8 flex gap-3">
+                  <button
+                    type="submit"
+                    className="bg-blue-600 text-white px-8 py-3 rounded-xl hover:bg-blue-700 transition-colors font-semibold"
+                  >
+                    Save Changes
+                  </button>
+                </div>
+              </form>
+            )}
+
+            {/* Overview / Bio - Enhanced */}
+            {!editing && (
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                <div className="lg:col-span-2">
+                  <section className="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-6">Overview</h2>
+                    <p className="text-gray-700 leading-relaxed text-lg">
+                      {profile.bio || "No bio added yet. Edit your profile to add a compelling bio about yourself."}
+                    </p>
+                  </section>
+
+                  {/* Skills Section - Enhanced */}
+                  {profile.skills && profile.skills.length > 0 && (
+                    <section className="bg-white p-8 rounded-2xl shadow-lg border border-gray-200 mt-8">
+                      <h3 className="text-2xl font-bold text-gray-900 mb-6">Skills & Expertise</h3>
+                      <div className="flex flex-wrap gap-3">
+                        {profile.skills.map((skill, index) => (
+                          <span 
+                            key={index} 
+                            className="bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-semibold hover:bg-blue-200 transition-colors"
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </section>
+                  )}
+                </div>
+
+                {/* Reviews Section - Sidebar */}
+                <section className="bg-white p-8 rounded-2xl shadow-lg border border-gray-200 h-fit">
+                  <h2 className="text-2xl font-bold text-gray-900 mb-6">Reviews</h2>
+                  {reviews.length > 0 ? (
+                    <div className="space-y-4 max-h-96 overflow-y-auto">
+                      {reviews.map((review) => (
+                        <div key={review.jobId + review.reviewerName} className="bg-gray-50 p-5 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+                          <div className="flex justify-between items-start mb-3">
+                            <h4 className="text-gray-900 font-semibold">{review.reviewerName}</h4>
+                            <span className="text-yellow-500 text-sm font-semibold">{'⭐'.repeat(review.rating)}</span>
+                          </div>
+                          <p className="text-gray-600 text-sm leading-relaxed">{review.comment || 'No comment provided.'}</p>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-8">
+                      <p className="text-gray-500">
+                        No reviews yet. Complete jobs and ask clients for feedback!
+                      </p>
+                    </div>
+                  )}
+                </section>
+              </div>
+            )}
+
+            {/* Back to Dashboard */}
+            <div className="mt-8 pb-8">
+              <Link
+                to="/dashboard"
+                className="inline-flex items-center gap-2 bg-white text-gray-700 px-6 py-3 rounded-xl hover:bg-gray-50 transition-colors font-semibold shadow-sm border border-gray-200 hover:border-gray-300"
+              >
+                <span>←</span>
+                Back to Dashboard
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -10,6 +10,7 @@ export default function MyJobs() {
   const [user, setUser] = useState(null);
   const [expandedJobId, setExpandedJobId] = useState(null);
   const [selectedApplicant, setSelectedApplicant] = useState(null);
+  const [reviewForm, setReviewForm] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -80,6 +81,77 @@ export default function MyJobs() {
     if (diffHours < 1) return "Just now";
     if (diffHours < 24) return `${diffHours}h ago`;
     return `${diffDays}d ago`;
+  };
+
+  const handleReviewChange = (jobId, field, value) => {
+    setReviewForm(prev => ({
+      ...prev,
+      [jobId]: {
+        ...prev[jobId],
+        [field]: value
+      }
+    }));
+  };
+
+  const submitReview = async (job) => {
+    const form = reviewForm[job._id] || {};
+    if (!form.rating || !form.comment?.trim()) {
+      alert('Please provide a rating and a comment before submitting.');
+      return;
+    }
+
+    setReviewForm(prev => ({
+      ...prev,
+      [job._id]: {
+        ...prev[job._id],
+        submitting: true
+      }
+    }));
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/users/${job.hiredFreelancer}/reviews`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          reviewerName: user.fullName,
+          rating: Number(form.rating),
+          comment: form.comment,
+          jobId: job._id
+        })
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert('Review submitted successfully.');
+        setReviewForm(prev => ({
+          ...prev,
+          [job._id]: {
+            ...prev[job._id],
+            submitted: true,
+            submitting: false
+          }
+        }));
+      } else {
+        alert(data.error || 'Failed to submit review.');
+        setReviewForm(prev => ({
+          ...prev,
+          [job._id]: {
+            ...prev[job._id],
+            submitting: false
+          }
+        }));
+      }
+    } catch (err) {
+      console.error('Review submit error:', err);
+      alert('Error submitting review.');
+      setReviewForm(prev => ({
+        ...prev,
+        [job._id]: {
+          ...prev[job._id],
+          submitting: false
+        }
+      }));
+    }
   };
 
   return (
@@ -189,6 +261,52 @@ export default function MyJobs() {
                             ))
                           ) : (
                             <p className="text-gray-600 p-4">No applications yet</p>
+                          )}
+                        </div>
+                      )}
+
+                      {job.status === 'completed' && job.hiredFreelancer && (
+                        <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+                          <h4 className="text-lg font-semibold text-green-800 mb-3">Leave a review for the hired freelancer</h4>
+                          {reviewForm[job._id]?.submitted ? (
+                            <p className="text-green-700">Thank you! Your review was submitted.</p>
+                          ) : (
+                            <>
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                                <div>
+                                  <label className="block text-sm font-semibold text-gray-700 mb-2">Rating</label>
+                                  <select
+                                    value={reviewForm[job._id]?.rating || ''}
+                                    onChange={(e) => handleReviewChange(job._id, 'rating', e.target.value)}
+                                    className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none"
+                                  >
+                                    <option value="">Select rating</option>
+                                    <option value="5">5 - Excellent</option>
+                                    <option value="4">4 - Very good</option>
+                                    <option value="3">3 - Good</option>
+                                    <option value="2">2 - Fair</option>
+                                    <option value="1">1 - Poor</option>
+                                  </select>
+                                </div>
+                                <div>
+                                  <label className="block text-sm font-semibold text-gray-700 mb-2">Comment</label>
+                                  <textarea
+                                    value={reviewForm[job._id]?.comment || ''}
+                                    onChange={(e) => handleReviewChange(job._id, 'comment', e.target.value)}
+                                    rows="3"
+                                    className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none"
+                                    placeholder="Share your experience working with this freelancer"
+                                  />
+                                </div>
+                              </div>
+                              <button
+                                onClick={() => submitReview(job)}
+                                disabled={reviewForm[job._id]?.submitting}
+                                className="inline-flex items-center justify-center rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700 transition-colors disabled:opacity-70"
+                              >
+                                {reviewForm[job._id]?.submitting ? 'Submitting...' : 'Submit Review'}
+                              </button>
+                            </>
                           )}
                         </div>
                       )}
