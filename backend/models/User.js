@@ -27,4 +27,6 @@ const userSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 });
 
-module.exports = mongoose.model('User', userSchema);
+const { usersDB } = require('../config/database');
+
+module.exports = usersDB.model('User', userSchema);

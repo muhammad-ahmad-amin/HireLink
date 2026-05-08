@@ -18,4 +18,6 @@ const jobSchema = new mongoose.Schema({
   completedAt: { type: Date, default: null }
 });
 
-module.exports = mongoose.model('Job', jobSchema);
+const { jobsDB } = require('../config/database');
+
+module.exports = jobsDB.model('Job', jobSchema);

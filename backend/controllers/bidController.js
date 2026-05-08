@@ -70,7 +70,7 @@ const updateBid = async (req, res) => {
 
 const getBidsForUser = async (req, res) => {
   try {
-    const bids = await Bid.find({ freelancerEmail: req.params.email }).sort({ createdAt: -1 }).populate('jobId');
+    const bids = await Bid.find({ freelancerEmail: req.params.email }).sort({ createdAt: -1 }).populate({ path: 'jobId', model: Job });
     res.json(bids);
   } catch (error) {
     res.status(500).json({ error: error.message });

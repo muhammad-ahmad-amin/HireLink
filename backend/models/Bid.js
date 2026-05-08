@@ -9,4 +9,6 @@ const bidSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 });
 
-module.exports = mongoose.model('Bid', bidSchema);
+const { bidsDB } = require('../config/database');
+
+module.exports = bidsDB.model('Bid', bidSchema);
