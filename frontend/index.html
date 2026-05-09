@@ -4,11 +4,57 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>frontend</title>
+    <title>HireLink | Hire & Get Hired</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   </head>
-  <body>
+  <body class="bg-[#f9fafb]">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'upwork-green': '#14a800',
+              'upwork-green-dark': '#108a00',
+              'upwork-dark': '#001e00',
+              'upwork-gray': '#5e6d55',
+              'upwork-light': '#f2f7f2',
+            },
+            boxShadow: {
+              'premium': '0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05)',
+            }
+          }
+        }
+      }
+    </script>
+    <style type="text/tailwindcss">
+      @layer base {
+        body {
+          @apply antialiased text-upwork-dark bg-[#f9fafb];
+          font-family: 'Inter', sans-serif;
+        }
+        svg {
+          @apply max-w-full max-h-full inline-block;
+        }
+      }
+      @layer components {
+        .btn-premium {
+          @apply bg-upwork-green text-white px-8 py-3 rounded-xl font-bold hover:bg-upwork-green-dark transition-all duration-300 shadow-sm hover:shadow-lg active:scale-95 text-center flex items-center justify-center;
+        }
+        .btn-premium-outline {
+          @apply bg-white text-upwork-green border-2 border-upwork-green px-8 py-3 rounded-xl font-bold hover:bg-upwork-light transition-all duration-300 active:scale-95 text-center flex items-center justify-center;
+        }
+        .card-premium {
+          @apply bg-white rounded-3xl border border-gray-100 shadow-premium hover:shadow-xl transition-all duration-500;
+        }
+        .text-gradient {
+          @apply bg-clip-text text-transparent bg-gradient-to-r from-upwork-green to-[#00a8ff];
+        }
+      }
+    </style>
   </body>
 </html>
