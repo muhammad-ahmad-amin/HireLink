@@ -11,7 +11,6 @@ A modern, scalable freelancing platform that connects talented professionals wit
 - **Job Discovery**: Advanced search and filtering to find relevant opportunities
 - **Bidding System**: Competitive bidding with proposal management
 - **Earnings Tracking**: Real-time wallet and transaction management
-- **Messaging**: Direct communication with clients
 - **Review System**: Build reputation through client feedback
 
 ### For Clients
@@ -25,7 +24,8 @@ A modern, scalable freelancing platform that connects talented professionals wit
 - **Real-time Notifications**: Stay updated with instant alerts
 - **Advanced Analytics**: Insights into performance and earnings
 - **Mobile Responsive**: Access anywhere, anytime
-- **Multi-tenant Architecture**: Scalable for enterprise use
+- **Multi-tenant Database Architecture**: Scalable and secure data isolation for enterprise use
+- **Distributed Database System**: High availability and fault tolerance for global scale
 - **Secure Authentication**: JWT-based authentication with role management
 
 ## 🚀 Tech Stack
@@ -90,8 +90,9 @@ HireLink/
 │   │   │   ├── BrowseJobs.jsx
 │   │   │   ├── JobDetails.jsx
 │   │   │   ├── PostJob.jsx
+│   │   │   ├── MyJobs.jsx
 │   │   │   ├── MyBids.jsx
-│   │   │   ├── Messages.jsx
+│   │   │   ├── MyApplications.jsx
 │   │   │   ├── Wallet.jsx
 │   │   │   └── FreelancerProfile.jsx
 │   │   ├── App.jsx          # Main application component
@@ -258,7 +259,7 @@ For support, email support@hirelink.com or join our Discord community.
 - ✅ Basic job posting and browsing
 - ✅ Bidding system
 - ✅ User profiles
-- ✅ Real-time messaging
+- ✅ Dashboard and wallet basics
 
 ### Phase 2 (Upcoming)
 - 🔄 Advanced search and filtering

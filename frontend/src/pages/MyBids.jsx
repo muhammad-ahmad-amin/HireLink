@@ -49,12 +49,12 @@ export default function MyBids() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Top Navbar */}
-      <nav className="bg-white shadow-md px-8 py-3 flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-blue-600">HireLink</h1>
+      <nav className="bg-white shadow-sm px-8 py-3 flex justify-between items-center">
+        <h1 className="text-2xl font-bold text-[#14a800]">HireLink</h1>
         <div className="flex items-center space-x-3">
           <Link
             to="/dashboard"
-            className="bg-blue-600 text-white px-3 py-1 rounded-lg text-sm hover:bg-blue-700 transition-colors"
+            className="bg-[#14a800] text-white px-3 py-1 rounded-lg text-sm hover:bg-[#118f00] transition-colors"
           >
             Dashboard
           </Link>
@@ -69,35 +69,33 @@ export default function MyBids() {
 
       <div className="flex flex-1">
         {/* Sidebar */}
-        <aside className="w-64 bg-white p-4 shadow-md flex flex-col space-y-2 text-sm">
-          <Link to="/dashboard" className="text-blue-600 font-semibold hover:bg-blue-50 px-2 py-1 rounded-lg transition-colors">
+        <aside className="w-64 bg-white p-4 shadow-sm flex flex-col space-y-2 text-sm">
+          <Link to="/dashboard" className="text-[#14a800] font-semibold hover:bg-green-50 px-2 py-1 rounded-lg transition-colors">
             Dashboard
           </Link>
-          <Link to="/browse-jobs" className="text-blue-600 font-semibold hover:bg-blue-50 px-2 py-1 rounded-lg transition-colors">
+          <Link to="/browse-jobs" className="text-[#14a800] font-semibold hover:bg-green-50 px-2 py-1 rounded-lg transition-colors">
             Browse Jobs
           </Link>
-          <Link to="/my-bids" className="text-blue-600 font-semibold bg-blue-50 px-2 py-1 rounded-lg transition-colors">
+          <Link to="/my-bids" className="text-[#14a800] font-semibold bg-green-50 px-2 py-1 rounded-lg transition-colors">
             My Bids
           </Link>
-          <Link to="/wallet" className="text-blue-600 font-semibold hover:bg-blue-50 px-2 py-1 rounded-lg transition-colors">
-            Wallet
-          </Link>
-          <Link to="/free-profile" className="text-blue-600 font-semibold hover:bg-blue-50 px-2 py-1 rounded-lg transition-colors">
+
+          <Link to="/free-profile" className="text-[#14a800] font-semibold hover:bg-green-50 px-2 py-1 rounded-lg transition-colors">
             Profile
           </Link>
         </aside>
 
         {/* Main Content */}
         <main className="flex-1 p-6">
-          <h2 className="text-3xl font-bold text-blue-600 mb-6">My Bids</h2>
+          <h2 className="text-3xl font-bold text-[#14a800] mb-6">My Bids</h2>
 
           {/* Filter */}
-          <div className="bg-white p-4 rounded-xl shadow-md mb-6">
-            <label className="text-blue-600 font-semibold mr-4">Filter by status:</label>
+          <div className="bg-white p-4 rounded-xl shadow-sm mb-6">
+            <label className="text-[#14a800] font-semibold mr-4">Filter by status:</label>
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              className="px-4 py-2 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14a800]"
             >
               <option value="">All Bids</option>
               <option value="pending">Pending</option>
@@ -107,14 +105,14 @@ export default function MyBids() {
           </div>
 
           {/* Bids List */}
-          {loading && <p className="text-blue-500">Loading bids...</p>}
+          {loading && <p className="text-[#14a800]">Loading bids...</p>}
           {error && <p className="text-red-600">{error}</p>}
           {!loading && filteredBids.length === 0 && (
-            <div className="bg-white p-6 rounded-xl shadow-md text-center">
-              <p className="text-blue-500 mb-4">No bids found</p>
+            <div className="bg-white p-6 rounded-xl shadow-sm text-center">
+              <p className="text-[#14a800] mb-4">No bids found</p>
               <Link
                 to="/browse-jobs"
-                className="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+                className="inline-block bg-[#14a800] text-white px-4 py-2 rounded-lg hover:bg-[#118f00] transition-colors font-semibold"
               >
                 Browse Jobs
               </Link>
@@ -125,17 +123,17 @@ export default function MyBids() {
             {filteredBids.map((bid) => (
               <div
                 key={bid.id}
-                className="bg-white p-5 rounded-xl shadow hover:shadow-lg border border-blue-200 transition-shadow"
+                className="bg-white p-5 rounded-xl shadow hover:shadow-sm border border-blue-200 transition-shadow"
               >
                 <div className="flex justify-between items-start mb-3">
                   <div>
                     <Link
                       to={`/jobs/${bid.jobId._id || bid.jobId}`}
-                      className="text-lg font-semibold text-blue-600 hover:text-blue-700"
+                      className="text-lg font-semibold text-[#14a800] hover:text-[#118f00]"
                     >
                       {bid.jobId?.title || bid.jobTitle}
                     </Link>
-                    <p className="text-blue-500 text-sm">Job ID: {bid.jobId._id || bid.jobId}</p>
+                    <p className="text-[#14a800] text-sm">Job ID: {bid.jobId._id || bid.jobId}</p>
                   </div>
                   <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
                     bid.status === "pending"
@@ -149,8 +147,8 @@ export default function MyBids() {
                 </div>
 
                 <div className="mb-3">
-                  <p className="text-2xl font-bold text-blue-600">${bid.bidAmount}</p>
-                  <p className="text-blue-500 text-sm mt-2">{bid.proposalText}</p>
+                  <p className="text-2xl font-bold text-[#14a800]">${bid.bidAmount}</p>
+                  <p className="text-[#14a800] text-sm mt-2">{bid.proposalText}</p>
                 </div>
 
                 <div className="flex justify-between items-center">
@@ -159,7 +157,7 @@ export default function MyBids() {
                   </p>
                   <Link
                     to={`/jobs/${bid.jobId}`}
-                    className="text-blue-600 hover:text-blue-700 font-semibold text-sm"
+                    className="text-[#14a800] hover:text-[#118f00] font-semibold text-sm"
                   >
                     View Job →
                   </Link>

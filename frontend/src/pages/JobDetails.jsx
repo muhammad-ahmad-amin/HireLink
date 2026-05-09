@@ -75,7 +75,7 @@ export default function JobDetails() {
     return (
       <div className="min-h-screen bg-gray-50 flex flex-col justify-center items-center">
         <p className="text-red-600 text-lg mb-4">{error}</p>
-        <Link to="/browse-jobs" className="text-blue-600 hover:underline">Back to Browse Jobs</Link>
+        <Link to="/browse-jobs" className="text-[#14a800] hover:underline">Back to Browse Jobs</Link>
       </div>
     );
   }
@@ -83,11 +83,11 @@ export default function JobDetails() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Navbar */}
-      <nav className="bg-white shadow-md px-8 py-3 flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-blue-600">HireLink</h1>
+      <nav className="bg-white shadow-sm px-8 py-3 flex justify-between items-center">
+        <h1 className="text-2xl font-bold text-[#14a800]">HireLink</h1>
         <Link
           to="/browse-jobs"
-          className="bg-blue-600 text-white px-3 py-1 rounded-lg text-sm hover:bg-blue-700 transition-colors"
+          className="bg-[#14a800] text-white px-3 py-1 rounded-lg text-sm hover:bg-[#118f00] transition-colors"
         >
           Back to Jobs
         </Link>
@@ -101,11 +101,11 @@ export default function JobDetails() {
         )}
 
         {/* Job Details */}
-        <div className="bg-white p-6 rounded-xl shadow-md mb-6">
+        <div className="bg-white p-6 rounded-xl shadow-sm mb-6">
           <div className="flex justify-between items-start mb-4">
             <div>
-              <h1 className="text-3xl font-bold text-blue-600 mb-2">{job.title}</h1>
-              <p className="text-blue-500">Posted by: {job.clientEmail}</p>
+              <h1 className="text-3xl font-bold text-[#14a800] mb-2">{job.title}</h1>
+              <p className="text-[#14a800]">Posted by: {job.clientEmail}</p>
             </div>
             <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
               job.status === "open"
@@ -120,17 +120,17 @@ export default function JobDetails() {
 
           <div className="grid grid-cols-2 gap-4 mb-6 py-4 border-y border-blue-200">
             <div>
-              <p className="text-blue-500 text-sm">Budget</p>
-              <p className="text-2xl font-bold text-blue-600">${job.budget}</p>
+              <p className="text-[#14a800] text-sm">Budget</p>
+              <p className="text-2xl font-bold text-[#14a800]">${job.budget}</p>
             </div>
             <div>
-              <p className="text-blue-500 text-sm">Category</p>
-              <p className="text-lg font-bold text-blue-600">{job.category || "General"}</p>
+              <p className="text-[#14a800] text-sm">Category</p>
+              <p className="text-lg font-bold text-[#14a800]">{job.category || "General"}</p>
             </div>
           </div>
 
-          <h2 className="text-xl font-bold text-blue-600 mb-3">Description</h2>
-          <p className="text-blue-500 text-base leading-relaxed mb-6">{job.description}</p>
+          <h2 className="text-xl font-bold text-[#14a800] mb-3">Description</h2>
+          <p className="text-[#14a800] text-base leading-relaxed mb-6">{job.description}</p>
 
           {/* Apply Button */}
           {user?.userType === "freelancer" && job.status === "open" && (
@@ -142,7 +142,7 @@ export default function JobDetails() {
                   ? "bg-green-100 text-green-700 cursor-not-allowed"
                   : applying
                   ? "bg-blue-400 text-white cursor-not-allowed"
-                  : "bg-blue-600 text-white hover:bg-blue-700"
+                  : "bg-[#14a800] text-white hover:bg-[#118f00]"
               }`}
             >
               {hasApplied ? "✓ Applied" : applying ? "Submitting..." : "Apply for this Job"}
@@ -150,7 +150,7 @@ export default function JobDetails() {
           )}
 
           {user?.userType === "client" && (
-            <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <div className="p-4 bg-green-50 border border-blue-200 rounded-lg">
               <p className="text-blue-700">You are viewing this as a client. Only freelancers can apply for jobs.</p>
             </div>
           )}
@@ -158,7 +158,7 @@ export default function JobDetails() {
           {!user && (
             <button
               onClick={() => navigate("/login")}
-              className="w-full py-3 px-6 rounded-lg font-semibold bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+              className="w-full py-3 px-6 rounded-lg font-semibold bg-[#14a800] text-white hover:bg-[#118f00] transition-colors"
             >
               Login to Apply
             </button>

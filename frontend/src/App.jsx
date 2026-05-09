@@ -8,7 +8,7 @@ import JobDetails from "./pages/JobDetails";
 import PostJob from "./pages/PostJob";
 import MyJobs from "./pages/MyJobs";
 import MyApplications from "./pages/MyApplications";
-import Wallet from "./pages/Wallet";
+
 
 function App() {
   return (
@@ -24,7 +24,7 @@ function App() {
         <Route path="/post-job" element={<PostJob />} />
         <Route path="/my-jobs" element={<MyJobs />} />
         <Route path="/my-applications" element={<MyApplications />} />
-        <Route path="/wallet" element={<Wallet />} />
+
       </Routes>
     </Router>
   );

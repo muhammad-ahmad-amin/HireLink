@@ -64,21 +64,17 @@ export default function Wallet() {
       <TopNav user={user} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex">
-          {/* Sidebar */}
-          <Sidebar user={user} />
-
-          {/* Main Content */}
-          <div className="flex-1 ml-8">
+        <div className="flex">{/* Main Content */}
+          <div className="flex-1">
             <h2 className="text-3xl font-bold text-gray-900 mb-6">Wallet</h2>
 
             {/* Balance Card */}
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-8 rounded-xl shadow-md mb-6">
+            <div className="bg-[#14a800] text-white p-8 rounded-xl shadow-sm mb-6">
               <p className="text-sm opacity-90 mb-2">Available Balance</p>
               <h1 className="text-5xl font-bold mb-4">${balance.toFixed(2)}</h1>
               <button
                 onClick={() => setShowWithdrawalForm(!showWithdrawalForm)}
-                className="bg-white text-blue-600 px-6 py-2 rounded-lg hover:bg-blue-50 transition-colors font-semibold"
+                className="bg-white text-[#14a800] px-6 py-2 rounded-lg hover:bg-green-50 transition-colors font-semibold"
               >
                 {showWithdrawalForm ? "Cancel" : "Withdraw"}
               </button>
@@ -97,7 +93,7 @@ export default function Wallet() {
                       value={withdrawalAmount}
                       onChange={(e) => setWithdrawalAmount(e.target.value)}
                       placeholder="Enter amount to withdraw"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14a800]"
                       required
                     />
                     <p className="text-gray-600 text-sm mt-2">Available: ${balance.toFixed(2)}</p>
@@ -110,7 +106,7 @@ export default function Wallet() {
                       value={bankAccount}
                       onChange={(e) => setBankAccount(e.target.value)}
                       placeholder="Enter your bank account number"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14a800]"
                       required
                     />
                   </div>
@@ -118,7 +114,7 @@ export default function Wallet() {
                   <div className="flex gap-3">
                     <button
                       type="submit"
-                      className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+                      className="bg-[#14a800] text-white px-6 py-2 rounded-lg hover:bg-[#118f00] transition-colors font-semibold"
                     >
                       Withdraw
                     </button>
@@ -160,7 +156,7 @@ export default function Wallet() {
                       </div>
                       <div className="text-right">
                         <p className={`text-2xl font-bold ${
-                          transaction.amount > 0 ? "text-green-600" : "text-red-600"
+                          transaction.amount > 0 ? "text-[#14a800]" : "text-red-600"
                         }`}>
                           {transaction.amount > 0 ? "+" : ""}{transaction.amount.toFixed(2)}
                         </p>

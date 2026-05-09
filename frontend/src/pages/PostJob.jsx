@@ -80,20 +80,20 @@ export default function PostJob() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Navbar */}
-      <nav className="bg-white shadow-md px-8 py-3 flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-blue-600">HireLink</h1>
+      <nav className="bg-white shadow-sm px-8 py-3 flex justify-between items-center">
+        <h1 className="text-2xl font-bold text-[#14a800]">HireLink</h1>
         <Link
           to="/dashboard"
-          className="bg-blue-600 text-white px-3 py-1 rounded-lg text-sm hover:bg-blue-700 transition-colors"
+          className="bg-[#14a800] text-white px-3 py-1 rounded-lg text-sm hover:bg-[#118f00] transition-colors"
         >
           Back to Dashboard
         </Link>
       </nav>
 
       <div className="flex-1 flex justify-center items-center p-6">
-        <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-2xl">
-          <h1 className="text-3xl font-bold text-blue-600 mb-2">Post a New Job</h1>
-          <p className="text-blue-500 mb-6">Fill out the details to create a job posting</p>
+        <div className="bg-white p-8 rounded-xl shadow-sm w-full max-w-2xl">
+          <h1 className="text-3xl font-bold text-[#14a800] mb-2">Post a New Job</h1>
+          <p className="text-[#14a800] mb-6">Fill out the details to create a job posting</p>
 
           {error && (
             <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg">
@@ -109,49 +109,49 @@ export default function PostJob() {
 
           <form onSubmit={handleSubmit}>
             <div className="mb-6">
-              <label className="block text-blue-600 font-semibold mb-2">Job Title</label>
+              <label className="block text-[#14a800] font-semibold mb-2">Job Title</label>
               <input
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="e.g., Build a React Dashboard"
-                className="w-full px-4 py-2 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14a800]"
                 required
               />
             </div>
 
             <div className="mb-6">
-              <label className="block text-blue-600 font-semibold mb-2">Description</label>
+              <label className="block text-[#14a800] font-semibold mb-2">Description</label>
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Describe the job in detail..."
                 rows="6"
-                className="w-full px-4 py-2 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14a800]"
                 required
               />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <div>
-                <label className="block text-blue-600 font-semibold mb-2">Budget ($)</label>
+                <label className="block text-[#14a800] font-semibold mb-2">Budget ($)</label>
                 <input
                   type="number"
                   step="0.01"
                   value={budget}
                   onChange={(e) => setBudget(e.target.value)}
                   placeholder="e.g., 500"
-                  className="w-full px-4 py-2 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14a800]"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-blue-600 font-semibold mb-2">Category</label>
+                <label className="block text-[#14a800] font-semibold mb-2">Category</label>
                 <select
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  className="w-full px-4 py-2 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14a800]"
                   required
                 >
                   <option value="">Select a category</option>
@@ -167,7 +167,7 @@ export default function PostJob() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold disabled:bg-blue-300"
+              className="w-full bg-[#14a800] text-white px-6 py-3 rounded-lg hover:bg-[#118f00] transition-colors font-semibold disabled:bg-blue-300"
             >
               {loading ? "Posting Job..." : "Post Job"}
             </button>

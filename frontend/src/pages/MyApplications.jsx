@@ -69,7 +69,7 @@ export default function MyApplications() {
       case 'applied':
         return 'bg-yellow-100 text-yellow-800';
       case 'hired':
-        return 'bg-blue-100 text-blue-800';
+        return 'bg-green-50 text-blue-800';
       case 'completed':
         return 'bg-green-100 text-green-800';
       default:
@@ -105,11 +105,7 @@ export default function MyApplications() {
 
       <div className="max-w-7xl mx-auto px-6 py-8">
         {/* Sidebar and Main Content */}
-        <div className="flex gap-8">
-          {/* Sidebar */}
-          <Sidebar user={user} />
-
-          {/* Main Content */}
+        <div className="flex gap-8">{/* Main Content */}
           <div className="flex-1">
             <div className="bg-white rounded-lg shadow-sm p-6">
               <h1 className="text-2xl font-bold text-gray-900 mb-6">My Applications</h1>
@@ -120,7 +116,7 @@ export default function MyApplications() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                   <p className="text-gray-500 mb-4">You haven't applied to any jobs yet</p>
-                  <Link to="/browse-jobs" className="text-blue-600 hover:text-blue-700 font-medium">
+                  <Link to="/browse-jobs" className="text-[#14a800] hover:text-[#118f00] font-medium">
                     Browse Jobs →
                   </Link>
                 </div>
@@ -158,7 +154,7 @@ export default function MyApplications() {
                         <div className="flex gap-3">
                           <Link
                             to={`/jobs/${job._id}`}
-                            className="px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-colors"
+                            className="px-4 py-2 text-sm font-medium text-[#14a800] hover:text-[#118f00] hover:bg-green-50 rounded-lg transition-colors"
                           >
                             View Details
                           </Link>
@@ -166,7 +162,7 @@ export default function MyApplications() {
                           {status === 'hired' && (
                             <button
                               onClick={() => handleCompleteJob(job._id)}
-                              className="px-4 py-2 text-sm font-medium text-green-600 hover:text-green-700 hover:bg-green-50 rounded-lg transition-colors"
+                              className="px-4 py-2 text-sm font-medium text-[#14a800] hover:text-[#118f00] hover:bg-green-50 rounded-lg transition-colors"
                             >
                               Mark as Completed
                             </button>

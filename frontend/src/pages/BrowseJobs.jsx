@@ -65,12 +65,8 @@ export default function BrowseJobs() {
       <TopNav user={user} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex">
-          {/* Sidebar */}
-          <Sidebar user={user} />
-
-          {/* Main Content */}
-          <div className="flex-1 ml-8">
+        <div className="flex">{/* Main Content */}
+          <div className="flex-1">
             <div className="mb-8">
               <h2 className="text-3xl font-bold text-gray-900 mb-2">Find Your Next Opportunity</h2>
               <p className="text-gray-600">Discover projects that match your skills and interests</p>
@@ -85,14 +81,14 @@ export default function BrowseJobs() {
                     placeholder="Search jobs by title, description, or skills..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#14a800] focus:border-transparent"
                   />
                 </div>
                 <div className="md:w-48">
                   <select
                     value={filterCategory}
                     onChange={(e) => setFilterCategory(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#14a800] focus:border-transparent"
                   >
                     <option value="">All Categories</option>
                     <option value="web-development">Web Development</option>
@@ -109,7 +105,7 @@ export default function BrowseJobs() {
             {/* Jobs List */}
             {loading && (
               <div className="flex items-center justify-center py-12">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#14a800]"></div>
               </div>
             )}
 
@@ -133,14 +129,14 @@ export default function BrowseJobs() {
               {filteredJobs.map((job) => (
                 <div
                   key={job.id}
-                  className="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow"
+                  className="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-sm transition-shadow"
                 >
                   <div className="p-6">
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <Link
                           to={`/jobs/${job.id}`}
-                          className="text-xl font-semibold text-gray-900 hover:text-blue-600 transition-colors"
+                          className="text-xl font-semibold text-gray-900 hover:text-[#14a800] transition-colors"
                         >
                           {job.title}
                         </Link>
@@ -148,14 +144,14 @@ export default function BrowseJobs() {
 
                         <div className="flex flex-wrap items-center gap-4 mt-4 text-sm text-gray-500">
                           <div className="flex items-center">
-                            <svg className="w-4 h-4 mr-1 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-4 h-4 mr-1 text-[#14a800]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                             </svg>
                             <span className="font-medium text-gray-900">${job.budget}</span>
                           </div>
 
                           <div className="flex items-center">
-                            <svg className="w-4 h-4 mr-1 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-4 h-4 mr-1 text-[#14a800]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                             </svg>
                             <span>{job.clientEmail}</span>
@@ -183,7 +179,7 @@ export default function BrowseJobs() {
 
                         <Link
                           to={`/jobs/${job._id}`}
-                          className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 font-medium"
+                          className="bg-[#14a800] text-white px-6 py-2 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 font-medium"
                         >
                           View Details
                         </Link>

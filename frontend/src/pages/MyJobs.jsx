@@ -160,12 +160,8 @@ export default function MyJobs() {
       <TopNav user={user} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex">
-          {/* Sidebar */}
-          <Sidebar user={user} />
-
-          {/* Main Content */}
-          <div className="flex-1 ml-8">
+        <div className="flex">{/* Main Content */}
+          <div className="flex-1">
             <h2 className="text-3xl font-bold text-gray-900 mb-6">My Posted Jobs</h2>
 
             {loading && <p className="text-gray-600">Loading jobs...</p>}
@@ -175,7 +171,7 @@ export default function MyJobs() {
                 <p className="text-gray-600 mb-4">You haven't posted any jobs yet.</p>
                 <Link
                   to="/post-job"
-                  className="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                  className="inline-block bg-[#14a800] text-white px-6 py-2 rounded-lg hover:bg-[#118f00] transition-colors font-medium"
                 >
                   Post a Job
                 </Link>
@@ -221,12 +217,12 @@ export default function MyJobs() {
                     <div className="mt-6">
                       <button
                         onClick={() => setExpandedJobId(expandedJobId === job._id ? null : job._id)}
-                        className="w-full text-left p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors flex justify-between items-center"
+                        className="w-full text-left p-4 bg-green-50 rounded-lg hover:bg-green-50 transition-colors flex justify-between items-center"
                       >
                         <span className="font-semibold text-blue-900">
                           Applications ({job.applications?.length || 0})
                         </span>
-                        <svg className={`w-5 h-5 text-blue-600 transition-transform ${expandedJobId === job._id ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className={`w-5 h-5 text-[#14a800] transition-transform ${expandedJobId === job._id ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                         </svg>
                       </button>
@@ -245,7 +241,7 @@ export default function MyJobs() {
                                   <div className="flex gap-2">
                                     <button
                                       onClick={() => setSelectedApplicant(applicant)}
-                                      className="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 transition-colors"
+                                      className="px-3 py-1 bg-[#14a800] text-white rounded text-sm hover:bg-[#118f00] transition-colors"
                                     >
                                       View Profile
                                     </button>
@@ -278,7 +274,7 @@ export default function MyJobs() {
                                   <select
                                     value={reviewForm[job._id]?.rating || ''}
                                     onChange={(e) => handleReviewChange(job._id, 'rating', e.target.value)}
-                                    className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none"
+                                    className="w-full rounded-lg border border-gray-300 p-3 focus:border-[#14a800] focus:outline-none"
                                   >
                                     <option value="">Select rating</option>
                                     <option value="5">5 - Excellent</option>
@@ -294,7 +290,7 @@ export default function MyJobs() {
                                     value={reviewForm[job._id]?.comment || ''}
                                     onChange={(e) => handleReviewChange(job._id, 'comment', e.target.value)}
                                     rows="3"
-                                    className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none"
+                                    className="w-full rounded-lg border border-gray-300 p-3 focus:border-[#14a800] focus:outline-none"
                                     placeholder="Share your experience working with this freelancer"
                                   />
                                 </div>
