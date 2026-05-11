@@ -24,7 +24,7 @@ export default function BrowseJobs() {
 
   const fetchJobs = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/jobs");
+      const response = await fetch("https://hirelink-rem9.onrender.com/api/jobs");
       const data = await response.json();
       setJobs(data);
       setError("");

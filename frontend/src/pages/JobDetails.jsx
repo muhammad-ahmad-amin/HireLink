@@ -23,7 +23,7 @@ export default function JobDetails() {
 
   const fetchJob = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/jobs/${jobId}`);
+      const response = await fetch(`https://hirelink-rem9.onrender.com/api/jobs/${jobId}`);
       const data = await response.json();
       if (response.ok) {
         setJob(data);
@@ -45,7 +45,7 @@ export default function JobDetails() {
 
     setApplying(true);
     try {
-      const response = await fetch(`http://localhost:5000/api/jobs/${jobId}/apply`, {
+      const response = await fetch(`https://hirelink-rem9.onrender.com/api/jobs/${jobId}/apply`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

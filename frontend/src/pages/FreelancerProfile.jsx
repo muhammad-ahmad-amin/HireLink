@@ -29,7 +29,7 @@ export default function FreelancerProfile() {
 
   const fetchProfile = async (email) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/users/${email}`);
+      const response = await fetch(`https://hirelink-rem9.onrender.com/api/users/${email}`);
       const data = await response.json();
       if (response.ok) {
         setProfile(data.profile || {
@@ -50,7 +50,7 @@ export default function FreelancerProfile() {
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:5000/api/users/${user.email}`, {
+      const response = await fetch(`https://hirelink-rem9.onrender.com/api/users/${user.email}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(profile),

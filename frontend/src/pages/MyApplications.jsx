@@ -20,7 +20,7 @@ export default function MyApplications() {
 
   const fetchFreelancerJobs = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/jobs/freelancer/${user.email}`);
+      const response = await fetch(`https://hirelink-rem9.onrender.com/api/jobs/freelancer/${user.email}`);
       const data = await response.json();
       setJobs(data);
       setLoading(false);
@@ -46,7 +46,7 @@ export default function MyApplications() {
 
   const handleCompleteJob = async (jobId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/jobs/${jobId}/complete`, {
+      const response = await fetch(`https://hirelink-rem9.onrender.com/api/jobs/${jobId}/complete`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ freelancerEmail: user.email })

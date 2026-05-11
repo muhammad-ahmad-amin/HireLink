@@ -22,7 +22,7 @@ export default function MyBids() {
 
   const fetchBids = async (userEmail) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/bids/user/${userEmail}`);
+      const response = await fetch(`https://hirelink-rem9.onrender.com/api/bids/user/${userEmail}`);
       const data = await response.json();
       if (response.ok) {
         setBids(data);
