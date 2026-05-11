@@ -253,16 +253,7 @@ export default function Dashboard() {
               </div>
             </div>
 
-            <div className="bg-upwork-dark rounded-[2rem] p-8 text-white relative overflow-hidden group shadow-xl">
-              <div className="relative z-10">
-                <h4 className="text-xl font-black mb-2 uppercase tracking-tighter">Upgrade to Pro</h4>
-                <p className="text-sm text-gray-400 font-medium mb-6 leading-relaxed">Unlock advanced insights, unlimited connects, and priority support.</p>
-                <button className="bg-white text-upwork-dark font-black px-6 py-2.5 rounded-xl text-xs uppercase tracking-widest hover:bg-upwork-green hover:text-white transition-all shadow-lg">
-                  Learn More
-                </button>
-              </div>
-              <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-upwork-green opacity-20 rounded-full blur-3xl group-hover:opacity-40 transition-opacity"></div>
-            </div>
+
           </div>
         </section>
       </main>
