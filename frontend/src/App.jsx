@@ -8,12 +8,15 @@ import JobDetails from "./pages/JobDetails";
 import PostJob from "./pages/PostJob";
 import MyJobs from "./pages/MyJobs";
 import MyApplications from "./pages/MyApplications";
+import Footer from "./components/Footer";
 
 
 function App() {
   return (
     <Router>
-      <Routes>
+      <div className="flex flex-col min-h-screen">
+        <div className="flex-grow">
+          <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
@@ -25,7 +28,10 @@ function App() {
         <Route path="/my-jobs" element={<MyJobs />} />
         <Route path="/my-applications" element={<MyApplications />} />
 
-      </Routes>
+          </Routes>
+        </div>
+        <Footer />
+      </div>
     </Router>
   );
 }
