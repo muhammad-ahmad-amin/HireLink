@@ -11,6 +11,9 @@ export default function MyJobs() {
   const [expandedJobId, setExpandedJobId] = useState(null);
   const [selectedApplicant, setSelectedApplicant] = useState(null);
   const [reviewForm, setReviewForm] = useState({});
+  const [applicantProfile, setApplicantProfile] = useState(null);
+  const [loadingProfile, setLoadingProfile] = useState(false);
+  const [profileError, setProfileError] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -45,6 +48,32 @@ export default function MyJobs() {
       setError("Error loading jobs");
     } finally {
       setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (selectedApplicant) {
+      fetchApplicantProfile(selectedApplicant.freelancerEmail);
+    } else {
+      setApplicantProfile(null);
+    }
+  }, [selectedApplicant]);
+
+  const fetchApplicantProfile = async (email) => {
+    setLoadingProfile(true);
+    setProfileError("");
+    try {
+      const response = await fetch(`https://hirelink-rem9.onrender.com/api/users/${email}`);
+      const data = await response.json();
+      if (response.ok) {
+        setApplicantProfile(data);
+      } else {
+        setProfileError(data.error || "Failed to load profile");
+      }
+    } catch (err) {
+      setProfileError("Error loading profile");
+    } finally {
+      setLoadingProfile(false);
     }
   };
 
@@ -314,6 +343,102 @@ export default function MyJobs() {
           </div>
         </div>
       </div>
+
+      {/* Applicant Profile Modal */}
+      {selectedApplicant && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center p-4">
+          <div className="bg-white rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div className="sticky top-0 bg-white border-b border-gray-100 p-6 flex justify-between items-center z-10">
+              <h3 className="text-2xl font-bold text-gray-900">Applicant Profile</h3>
+              <button 
+                onClick={() => setSelectedApplicant(null)}
+                className="text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+              </button>
+            </div>
+            
+            <div className="p-6">
+              {loadingProfile ? (
+                <div className="flex justify-center items-center py-12">
+                  <div className="animate-spin rounded-full h-8 w-8 border-4 border-green-100 border-t-green-600"></div>
+                </div>
+              ) : profileError ? (
+                <div className="p-4 bg-red-50 text-red-600 rounded-lg">{profileError}</div>
+              ) : applicantProfile ? (
+                <div className="space-y-8">
+                  {/* Header */}
+                  <div className="flex items-center gap-6">
+                    <img
+                      src={`https://ui-avatars.com/api/?name=${selectedApplicant.freelancerName || "User"}&background=10b981&color=ffffff&rounded=true&size=100`}
+                      alt="Avatar"
+                      className="w-24 h-24 rounded-full shadow-sm"
+                    />
+                    <div>
+                      <h2 className="text-3xl font-bold text-gray-900">{selectedApplicant.freelancerName}</h2>
+                      <p className="text-gray-500">{selectedApplicant.freelancerEmail}</p>
+                      {applicantProfile.profile?.hourlyRate > 0 && (
+                        <p className="text-green-600 font-semibold mt-2">${applicantProfile.profile.hourlyRate}/hr</p>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Bio */}
+                  <div>
+                    <h4 className="text-lg font-bold text-gray-900 mb-3">About</h4>
+                    <p className="text-gray-600 whitespace-pre-wrap leading-relaxed">
+                      {applicantProfile.profile?.bio || "No bio provided."}
+                    </p>
+                  </div>
+
+                  {/* Skills */}
+                  {applicantProfile.profile?.skills?.length > 0 && (
+                    <div>
+                      <h4 className="text-lg font-bold text-gray-900 mb-3">Skills</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {applicantProfile.profile.skills.map((skill, i) => (
+                          <span key={i} className="px-4 py-2 bg-gray-50 border border-gray-200 rounded-full text-gray-700 text-sm font-medium">
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Reviews */}
+                  {applicantProfile.profile?.reviews?.length > 0 && (
+                    <div>
+                      <h4 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+                        Reviews 
+                        <span className="text-yellow-500 font-bold text-sm ml-2">
+                          ★ {applicantProfile.profile.averageRating?.toFixed(1) || 0} ({applicantProfile.profile.reviewCount || 0})
+                        </span>
+                      </h4>
+                      <div className="space-y-4">
+                        {applicantProfile.profile.reviews.map((review, i) => (
+                          <div key={i} className="p-4 bg-gray-50 rounded-xl">
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="font-semibold text-gray-900">{review.reviewerName}</span>
+                              <div className="flex text-yellow-400">
+                                {[...Array(5)].map((_, idx) => (
+                                  <span key={idx}>{idx < review.rating ? '★' : '☆'}</span>
+                                ))}
+                              </div>
+                            </div>
+                            <p className="text-gray-600 text-sm italic">"{review.comment}"</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <p className="text-gray-500 text-center py-8">Profile not found.</p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
