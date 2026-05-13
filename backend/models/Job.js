@@ -18,10 +18,10 @@ const jobSchema = new mongoose.Schema({
   completedAt: { type: Date, default: null }
 });
 
-// Compound index for filtering jobs
+
 jobSchema.index({ category: 1, status: 1 });
 
-// Text index for searching jobs by keywords
+
 jobSchema.index({ title: 'text', description: 'text' });
 
 const { jobsDB } = require('../config/database');

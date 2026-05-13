@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import API_BASE_URL from "../config/api";
+
 
 export default function Signup() {
   const [fullName, setFullName] = useState("");
@@ -7,6 +9,7 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [userType, setUserType] = useState("freelancer");
+  const [adminSecret, setAdminSecret] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -23,10 +26,16 @@ export default function Signup() {
     setLoading(true);
 
     try {
-      const response = await fetch("https://hirelink-rem9.onrender.com/api/auth/signup", {
+      const response = await fetch(`${API_BASE_URL}/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ fullName, email, password, userType }),
+        body: JSON.stringify({ 
+          fullName, 
+          email, 
+          password, 
+          userType,
+          ...(userType === 'admin' && { adminSecret })
+        }),
       });
 
       const data = await response.json();
@@ -38,7 +47,13 @@ export default function Signup() {
 
       // Store user in localStorage
       localStorage.setItem("user", JSON.stringify(data.user));
-      navigate("/dashboard");
+      
+      // Redirect based on user type
+      if (data.user.userType === 'admin') {
+        navigate("/admin/dashboard");
+      } else {
+        navigate("/dashboard");
+      }
     } catch (err) {
       setError("Error connecting to server");
     } finally {
@@ -165,12 +180,38 @@ export default function Signup() {
                 >
                   <option value="freelancer">Freelancer - I want to find work</option>
                   <option value="client">Client - I want to hire talent</option>
+                  <option value="admin">Admin - Platform Administrator</option>
                 </select>
                 <svg className="absolute right-3 top-3.5 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </div>
             </div>
+
+            {userType === 'admin' && (
+              <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <div>
+                  <label htmlFor="adminSecret" className="block text-sm font-medium text-gray-700 mb-2">
+                    Admin Secret Key
+                  </label>
+                  <div className="relative">
+                    <input
+                      id="adminSecret"
+                      type="password"
+                      placeholder="Enter admin secret key"
+                      value={adminSecret}
+                      onChange={(e) => setAdminSecret(e.target.value)}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#14a800] focus:border-transparent transition-colors"
+                      required
+                    />
+                    <svg className="absolute right-3 top-3.5 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                  </div>
+                  <p className="text-xs text-blue-600 mt-2">🔒 Admin registration requires a secret key for security</p>
+                </div>
+              </div>
+            )}
 
             <button
               type="submit"

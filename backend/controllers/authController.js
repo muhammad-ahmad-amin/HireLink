@@ -2,10 +2,23 @@ const User = require('../models/User');
 
 const signup = async (req, res) => {
   try {
-    const { email, password, fullName, userType } = req.body;
+    const { email, password, fullName, userType, adminSecret } = req.body;
 
     if (!email || !password || !fullName || !userType) {
       return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    // Validate userType
+    const normalizedUserType = userType.toLowerCase();
+    if (!['client', 'freelancer', 'admin'].includes(normalizedUserType)) {
+      return res.status(400).json({ error: 'Invalid user type' });
+    }
+
+    // Admin account creation requires a secret key
+    if (normalizedUserType === 'admin') {
+      if (!adminSecret || adminSecret !== process.env.ADMIN_SECRET_KEY) {
+        return res.status(403).json({ error: 'Unauthorized: Invalid admin secret' });
+      }
     }
 
     const existingUser = await User.findOne({ email: email.toLowerCase().trim() });
@@ -17,7 +30,7 @@ const signup = async (req, res) => {
       email: email.toLowerCase().trim(),
       password,
       fullName,
-      userType,
+      userType: normalizedUserType,
       profile: {
         bio: '',
         skills: [],

@@ -48,6 +48,14 @@ export default function TopNav({ user }) {
                   Post Job
                 </Link>
               )}
+              {user?.userType === 'admin' && (
+                <Link 
+                  to="/admin/dashboard" 
+                  className={`text-sm font-bold tracking-tight transition-colors ${isActive('/admin/dashboard') || isActive('/admin/stats') || isActive('/admin/users') || isActive('/admin/jobs') ? 'text-upwork-green' : 'text-gray-500 hover:text-upwork-dark'}`}
+                >
+                  Admin Panel
+                </Link>
+              )}
             </div>
           </div>
 

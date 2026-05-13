@@ -8,6 +8,11 @@ import JobDetails from "./pages/JobDetails";
 import PostJob from "./pages/PostJob";
 import MyJobs from "./pages/MyJobs";
 import MyApplications from "./pages/MyApplications";
+import Stats from "./pages/Stats";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminStats from "./pages/AdminStats";
+import AdminUsers from "./pages/AdminUsers";
+import AdminJobs from "./pages/AdminJobs";
 import Footer from "./components/Footer";
 
 
@@ -27,6 +32,11 @@ function App() {
         <Route path="/post-job" element={<PostJob />} />
         <Route path="/my-jobs" element={<MyJobs />} />
         <Route path="/my-applications" element={<MyApplications />} />
+        <Route path="/stats" element={<Stats />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/stats" element={<AdminStats />} />
+        <Route path="/admin/users" element={<AdminUsers />} />
+        <Route path="/admin/jobs" element={<AdminJobs />} />
 
           </Routes>
         </div>

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import API_BASE_URL from "../config/api";
+
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -14,7 +16,7 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const response = await fetch("https://hirelink-rem9.onrender.com/api/auth/login", {
+      const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -29,7 +31,13 @@ export default function Login() {
 
       // Store user in localStorage
       localStorage.setItem("user", JSON.stringify(data.user));
-      navigate("/dashboard");
+      
+      // Redirect based on user type
+      if (data.user.userType === 'admin') {
+        navigate("/admin/dashboard");
+      } else {
+        navigate("/dashboard");
+      }
     } catch (err) {
       setError("Error connecting to server");
     } finally {

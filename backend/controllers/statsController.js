@@ -3,7 +3,7 @@ const User = require('../models/User');
 
 const getPlatformStats = async (req, res) => {
   try {
-    // AGGREGATION PIPELINE: Platform-wide insights using $facet for parallel processing
+    
     const stats = await Job.aggregate([
       {
         $facet: {
@@ -37,7 +37,7 @@ const getPlatformStats = async (req, res) => {
       }
     ]);
 
-    // AGGREGATION PIPELINE: User distribution and top performers
+    
     const userStats = await User.aggregate([
       {
         $facet: {

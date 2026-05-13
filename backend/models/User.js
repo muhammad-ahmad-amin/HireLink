@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true, lowercase: true, trim: true },
   password: { type: String, required: true },
   fullName: { type: String, required: true },
-  userType: { type: String, required: true, enum: ['client', 'freelancer'], index: true },
+  userType: { type: String, required: true, enum: ['client', 'freelancer', 'admin'], index: true, lowercase: true },
   profile: { type: profileSchema, default: () => ({}) },
   createdAt: { type: Date, default: Date.now, index: true }
 });
@@ -40,12 +40,10 @@ userSchema.pre('save', async function (next) {
   }
 });
 
-// Method to compare password for login
 userSchema.methods.comparePassword = async function (candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password);
 };
 
-// TRIGGER: Automatically recalculate rating and count before saving
 userSchema.pre('save', function (next) {
   if (this.isModified('profile.reviews')) {
     this.profile.reviewCount = this.profile.reviews.length;
