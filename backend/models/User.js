@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const reviewSchema = new mongoose.Schema({
   jobId: { type: String, required: true },
@@ -22,9 +23,40 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true, lowercase: true, trim: true },
   password: { type: String, required: true },
   fullName: { type: String, required: true },
-  userType: { type: String, required: true, enum: ['client', 'freelancer'] },
+  userType: { type: String, required: true, enum: ['client', 'freelancer'], index: true },
   profile: { type: profileSchema, default: () => ({}) },
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now, index: true }
+});
+
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
+
+  try {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
+
+// Method to compare password for login
+userSchema.methods.comparePassword = async function (candidatePassword) {
+  return bcrypt.compare(candidatePassword, this.password);
+};
+
+// TRIGGER: Automatically recalculate rating and count before saving
+userSchema.pre('save', function (next) {
+  if (this.isModified('profile.reviews')) {
+    this.profile.reviewCount = this.profile.reviews.length;
+    if (this.profile.reviewCount > 0) {
+      const sum = this.profile.reviews.reduce((total, review) => total + review.rating, 0);
+      this.profile.averageRating = Number((sum / this.profile.reviewCount).toFixed(1));
+    } else {
+      this.profile.averageRating = 0;
+    }
+  }
+  next();
 });
 
 const { usersDB } = require('../config/database');

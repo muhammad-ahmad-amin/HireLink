@@ -13,6 +13,7 @@ require('./config/database');
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/users', require('./routes/users'));
 app.use('/api/jobs', require('./routes/jobs'));
+app.use('/api/stats', require('./routes/stats'));
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'Server is running' });

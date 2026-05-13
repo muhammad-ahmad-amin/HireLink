@@ -13,10 +13,16 @@ const jobSchema = new mongoose.Schema({
     freelancerName: { type: String, required: true },
     appliedAt: { type: Date, default: Date.now }
   }],
-  createdAt: { type: Date, default: Date.now },
+  createdAt: { type: Date, default: Date.now, index: true },
   updatedAt: { type: Date, default: Date.now },
   completedAt: { type: Date, default: null }
 });
+
+// Compound index for filtering jobs
+jobSchema.index({ category: 1, status: 1 });
+
+// Text index for searching jobs by keywords
+jobSchema.index({ title: 'text', description: 'text' });
 
 const { jobsDB } = require('../config/database');
 

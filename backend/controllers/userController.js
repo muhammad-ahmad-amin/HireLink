@@ -69,9 +69,7 @@ const addUserReview = async (req, res) => {
     }
 
     user.profile.reviews.unshift({ jobId, reviewerName, rating, comment });
-    user.profile.reviewCount = user.profile.reviews.length;
-    user.profile.averageRating =
-      user.profile.reviews.reduce((sum, review) => sum + review.rating, 0) / user.profile.reviewCount;
+    // Note: reviewCount and averageRating are automatically updated by User model trigger
 
     await user.save();
 
